@@ -1,0 +1,25 @@
+{
+  "name": "vue3-heatmap",
+  "version": "1.0.0",
+  "description": "Multi-color heatmap similar creator with VueJS 3",
+  "main": "./dist/index.js",
+  "style": "./dist/MyComponent.css",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "rollup -c --environment BUILD:production"
+  },
+  "keywords": [],
+  "author": "Burak Karahan",
+  "license": "MIT",
+  "peerDependencies": {
+    "vue": "^3.2.21"
+  },
+  "devDependencies": {
+    "postcss": "^8.4.6",
+    "rollup": "^2.67.2",
+    "rollup-plugin-css-only": "^0.4.0",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-postcss": "^4.0.2",
+    "rollup-plugin-vue": "^6.0.0"
+  }
+}
