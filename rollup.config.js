@@ -24,7 +24,7 @@ export default [
   {
     input: 'src/index.js',
     output: {
-        name: 'plugin0',
+        name: 'VueHeatmap',
         format: 'iife',
         file: 'dist/library.js',
         globals: {
