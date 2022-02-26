@@ -1,8 +1,10 @@
 <style scoped>
   .heatmapContainer {
-    position: relative;
     width: 1280px;
     height: 720px;
+    aspect-ratio: 16/9;
+    position: relative;
+    background-size: contain;
     background-image: v-bind("backgroundImage");
   }
 
@@ -26,8 +28,6 @@
   }
 
   .heatmapPin {
-    left: v-bind("calculatePinX");
-    top: v-bind("calculatePinY");
     position: absolute;
     z-index: 1;
     height: 20px;
@@ -67,7 +67,7 @@
     <!--- /Legend --->
     <!--- Pin --->
     <template v-if="pinActive">
-        <div class="heatmapPin">
+        <div class="heatmapPin" :style="createPin(calculatePinX, calculatePinY)">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Pro 6.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M168.3 499.2C116.1 435 0 279.4 0 192C0 85.96 85.96 0 192 0C298 0 384 85.96 384 192C384 279.4 267 435 215.7 499.2C203.4 514.5 180.6 514.5 168.3 499.2H168.3zM192 256C227.3 256 256 227.3 256 192C256 156.7 227.3 128 192 128C156.7 128 128 156.7 128 192C128 227.3 156.7 256 192 256z"/></svg>
         </div>
     </template>
@@ -100,6 +100,23 @@
       createLegendCase(r, g, b, value, radius) {
         return `${this.createSizeForCase(radius)}${this.createBackgroundForCase(value, r, g, b)}`;
       },
+      calculateXorY: function(z, value) {
+        if (value == 5) {
+          return z - 25;
+        }
+        else if (value == 4) {
+          return z - 20;
+        }
+        else if (value == 3) {
+          return z - 17;
+        }
+        else if (value == 2) {
+          return z - 13;
+        }
+        else if (value == 1) {
+          return z - 10;
+        }
+      },
       createCase(x, y, categoryId, value, radius) {
         let rId = this.categories.findIndex(category => category.id === categoryId);
         if (rId === -1) {
@@ -108,7 +125,7 @@
         let r = this.categories[rId].red;
         let g = this.categories[rId].green;
         let b = this.categories[rId].blue;
-        return `left: ${x}px;top:${y}px;${this.createSizeForCase(radius)}${this.createBackgroundForCase(value, r, g, b)}`;
+        return `left: ${this.calculateXorY(x, value)}px;top:${this.calculateXorY(y, value)}px;${this.createSizeForCase(radius)}${this.createBackgroundForCase(value, r, g, b)}`;
       },
       createBackgroundForCase(value, r, g, b) {
         if (value == 5) {
@@ -127,7 +144,7 @@
         if (radius == 5) {
           return `width:${50}px; height:${50}px;`;
         } else if (radius == 4) {
-          return `width:${40}px; height:${35}px;`;
+          return `width:${40}px; height:${40}px;`;
         } else if (radius == 3) {
           return `width:${35}px; height:${35}px;`;
         } else if (radius == 2) {
@@ -135,6 +152,9 @@
         } else if (radius == 1) {
           return `width:${20}px; height:${20}px;`;
         }
+      },
+      createPin(x, y) {
+        return `left: ${x}px;top:${y}px;`;
       },
     }
   }
